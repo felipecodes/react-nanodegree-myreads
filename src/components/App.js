@@ -31,30 +31,32 @@ class App extends Component {
         currentlyReadingIds,
         wantReadIds,
         readIds
-      } = prevState
+      } = prevState.books
 
       // Does not change if already exists
       if (currentlyReadingIds.indexOf(id) > -1) {
         return prevState
       }
 
-      const newState = {
-        currentlyReadingIds: [id, ...currentlyReadingIds]
-      }
-
       // Remove the book of the "want to read" list
       let index = wantReadIds.indexOf(id)
       if (index > -1) {
-        newState.wantReadIds = wantReadIds.splice(index, 1)
+        wantReadIds.splice(index, 1)
       }
 
       // Remove the book of the "read" list
       index = readIds.indexOf(id)
       if (index > -1) {
-        newState.readIds = readIds.splice(index, 1)
+        readIds.splice(index, 1)
       }
 
-      return newState
+      return {
+        books: Object.assign(prevState.books, {
+          currentlyReadingIds: [id, ...currentlyReadingIds],
+          wantReadIds,
+          readIds
+        })
+      }
     })
   }
 
@@ -68,30 +70,32 @@ class App extends Component {
         currentlyReadingIds,
         wantReadIds,
         readIds
-      } = prevState
+      } = prevState.books
 
       // Does not change if already exists
       if (wantReadIds.indexOf(id) > -1) {
         return prevState
       }
 
-      const newState = {
-        wantReadIds: [id, ...wantReadIds]
-      }
-
       // Remove the book of the "currently reading" list
       let index = currentlyReadingIds.indexOf(id)
       if (index > -1) {
-        newState.currentlyReadingIds = currentlyReadingIds.splice(index, 1)
+        currentlyReadingIds.splice(index, 1)
       }
 
       // Remove the book of the "read" list
       index = readIds.indexOf(id)
       if (index > -1) {
-        newState.readIds = readIds.splice(index, 1)
+        readIds.splice(index, 1)
       }
 
-      return newState
+      return {
+        books: Object.assign(prevState.books, {
+          currentlyReadingIds,
+          wantReadIds: [id, ...wantReadIds],
+          readIds
+        })
+      }
     })
   }
 
@@ -105,30 +109,32 @@ class App extends Component {
         currentlyReadingIds,
         wantReadIds,
         readIds
-      } = prevState
+      } = prevState.books
 
       // Does not change if already exists
       if (readIds.indexOf(id) > -1) {
         return prevState
       }
 
-      const newState = {
-        readIds: [id, ...readIds]
-      }
-
       // Remove the book of the "currently reading" list
       let index = currentlyReadingIds.indexOf(id)
       if (index > -1) {
-        newState.currentlyReadingIds = currentlyReadingIds.splice(index, 1)
+        currentlyReadingIds.splice(index, 1)
       }
 
       // Remove the book of the "want to read" list
       index = wantReadIds.indexOf(id)
       if (index > -1) {
-        newState.wantReadIds = wantReadIds.splice(index, 1)
+        wantReadIds.splice(index, 1)
       }
 
-      return newState
+      return {
+        books: Object.assign(prevState.books, {
+          currentlyReadingIds,
+          wantReadIds,
+          readIds: [id, ...readIds]
+        })
+      }
     })
   }
 
@@ -141,11 +147,20 @@ class App extends Component {
 
   componentDidMount() {
     BooksAPI.getAll()
-      .then(({ books: byId, allIds }) =>  (
+      .then(res => res.json())
+      .then(data => {
+        const byId = {}
+        const allIds = []
+
+        for (const book of data.books) {
+          byId[book.id] = book
+          allIds.push(book.id)
+        }
+
         this.setState({
           books: Object.assign(this.state.books,  { byId, allIds })
         })
-      ))
+      })
   }
 
   render() {
