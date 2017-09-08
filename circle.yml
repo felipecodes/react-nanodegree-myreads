@@ -1,6 +1,8 @@
 machine:
   node:
     version: 8.4.0
+  environment:
+    COVERALLS_REPO_TOKEN: uNrVazmXGEPCaDhW8qneNBc2Hiqbe2hkO
 test:
   override:
     - npm run test:ci
