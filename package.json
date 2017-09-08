@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "coveralls": "2.13.1",
     "enzyme": "2.9.1",
     "escape-string-regexp": "1.0.5",
     "prop-types": "15.5.10",
@@ -21,7 +22,6 @@
     "eject": "react-scripts eject"
   },
   "devDependencies": {
-    "coveralls": "2.13.1",
     "enzyme-to-json": "1.5.1",
     "sinon": "3.2.1"
   },
