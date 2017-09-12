@@ -29,7 +29,7 @@ class Book extends Component {
     return (
       <li>
         <h1>{book.title}</h1>
-        <h2>{book.subtitle}></h2>
+        <h2>{book.subtitle}</h2>
 
         <select onChange={this.handleChange}>
           <option></option>
