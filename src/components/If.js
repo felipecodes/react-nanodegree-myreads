@@ -1,4 +1,3 @@
-// eslint-disable-next-line
-import React from 'react'
+const If = ({ test, children }) => test ? children : null
 
-export default ({ test, children }) => test ? children : null
+export default If
