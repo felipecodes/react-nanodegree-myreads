@@ -1,4 +1,5 @@
-import React from 'react'
+import React, { Component } from 'react'
+import { MemoryRouter, Route } from 'react-router-dom'
 import { shallow, mount } from 'enzyme'
 import sinon from 'sinon'
 import App from './App'
@@ -13,11 +14,32 @@ describe('App component', () => {
 
   sinon.stub(global, 'fetch').callsFake(() => promise)
 
-  const wrapper = mount(<App />)
+  const wrapper = mount(
+    <App
+      router={MemoryRouter}
+      initialEntries={[ '/' ]}
+      initialIndex={1} />
+  )
 
   if (!process.env.CI) {
-    it('App renders correctly', () => {
-      expect(shallow(<App />)).toMatchSnapshot()
+    it('App renders correctly in home page', () => {
+      const test = shallow(
+        <App
+          router={MemoryRouter}
+          initialEntries={[ '/' ]}
+          initialIndex={0} />
+      )
+      expect(test).toMatchSnapshot('Home page')
+    })
+
+    it('App renders correctly in search page', () => {
+      const test = shallow(
+        <App
+          router={MemoryRouter}
+          initialEntries={[ '/search' ]}
+          initialIndex={0} />
+      )
+      expect(test).toMatchSnapshot('Search page')
     })
   }
 
@@ -56,5 +78,14 @@ describe('App component', () => {
       .toEqual(false)
     expect(wrapper.state('books').wantReadIds.indexOf('jAUODAAAQBAJ') > -1)
       .toEqual(false)
+  })
+
+  it('Search page', () => {
+    const wrapper = mount(
+      <App
+        router={MemoryRouter}
+        initialEntries={[ '/search' ]}
+        initialIndex={1} />
+    )
   })
 })

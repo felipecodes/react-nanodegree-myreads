@@ -1,11 +1,9 @@
 import React, { Component } from 'react'
-import { BrowserRouter as Router, Route } from 'react-router-dom'
+import { Route } from 'react-router-dom'
 import escapeRegExp from 'escape-string-regexp'
-import BookCase from './BookCase'
-import BookList from './BookList'
 import Header from './Header'
-import SearchBar from './SearchBar'
-import SearchButton from './SearchButton'
+import HomePage from './HomePage'
+import SearchPage from './SearchPage'
 import * as BooksAPI from '../BooksAPI/'
 
 class App extends Component {
@@ -145,6 +143,17 @@ class App extends Component {
 
   searchBooks = query => this.setState({ books: { query } })
 
+  getSearchtedBooks = () => {
+    const { byId, allIds, query } = this.state.books
+    if (query === '') {
+      return []
+    }
+
+    const match = new RegExp(escapeRegExp(query), 'i')
+    const filtered = allIds.filter(id => match.test(byId[id].title))
+    return filtered.map(id => byId[id])
+  }
+
   componentDidMount() {
     BooksAPI.getAll()
       .then(res => res.json())
@@ -165,6 +174,12 @@ class App extends Component {
 
   render() {
     const {
+      router: Router,
+      initialEntries,
+      initialIndex
+    } = this.props
+
+    const {
       byId,
       allIds,
       currentlyReadingIds,
@@ -172,38 +187,34 @@ class App extends Component {
       readIds
     } = this.state.books
 
+    const conditionalProps = initialEntries ? {
+      initialEntries,
+      initialIndex
+    } : {}
+
     return (
-      <Router>
+      <Router {...conditionalProps} >
         <div>
           <Header />
-          <div>
-            <Route exact path='/' render={() => {
-              return (
-                <div>
-                  <BookCase
-                    byId={byId}
-                    currentlyReadingIds={currentlyReadingIds}
-                    wantReadIds={wantReadIds}
-                    readIds={readIds}
-                    addTocurrentlyReading={this.addTocurrentlyReading}
-                    addToWantRead={this.addToWantRead}
-                    addToRead={this.addToRead} />
-                  <SearchButton />
-                </div>
-              )
-            }}/>
-            <Route exact path="/search" render={() => {
-              const match = new RegExp(escapeRegExp(this.state.books.query), 'i')
-              const filtered = allIds.filter(id => match.test(byId[id].title))
-              const books = filtered.map(id => byId[id])
-              return (
-                <div>
-                  <SearchBar byId={byId} allIds={allIds}/>
-                  <BookList books={books} />
-                </div>
-              )
-            }}/>
-          </div>
+          <Route exact path='/' render={() => (
+            <HomePage
+              byId={byId}
+              currentlyReadingIds={currentlyReadingIds}
+              wantReadIds={wantReadIds}
+              readIds={readIds}
+              addTocurrentlyReading={this.addTocurrentlyReading}
+              addToWantRead={this.addToWantRead}
+              addToRead={this.addToRead} />
+          )}/>
+          <Route exact path="/search" render={() => (
+            <SearchPage
+              byId={byId}
+              allIds={allIds}
+              addTocurrentlyReading={this.addTocurrentlyReading}
+              addToWantRead={this.addToWantRead}
+              addToRead={this.addToRead}
+              getSearchtedBooks={this.getSearchtedBooks} />
+          )}/>
         </div>
       </Router>
     )
