@@ -14,12 +14,8 @@ describe('App component', () => {
 
   sinon.stub(global, 'fetch').callsFake(() => promise)
 
-  const wrapper = mount(
-    <App
-      router={MemoryRouter}
-      initialEntries={[ '/' ]}
-      initialIndex={0} />
-  )
+  // Mount using the default location: { pathname: "/" }
+  const wrapper = mount(<App router={MemoryRouter} />)
 
   if (!process.env.CI) {
     it('App renders correctly in home page', () => {
