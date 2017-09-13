@@ -141,7 +141,11 @@ class App extends Component {
    * @param {String} query The string typed in the search bar
    */
 
-  searchBooks = query => this.setState({ books: { query } })
+  searchBooks = query => {
+    this.setState({
+      books: Object.assign(this.state.books, { query })
+    })
+  }
 
   getSearchtedBooks = () => {
     const { byId, allIds, query } = this.state.books
@@ -181,7 +185,6 @@ class App extends Component {
 
     const {
       byId,
-      allIds,
       currentlyReadingIds,
       wantReadIds,
       readIds
@@ -208,12 +211,11 @@ class App extends Component {
           )}/>
           <Route exact path="/search" render={() => (
             <SearchPage
-              byId={byId}
-              allIds={allIds}
               addTocurrentlyReading={this.addTocurrentlyReading}
               addToWantRead={this.addToWantRead}
               addToRead={this.addToRead}
-              getSearchtedBooks={this.getSearchtedBooks} />
+              getSearchtedBooks={this.getSearchtedBooks}
+              searchBooks={this.searchBooks} />
           )}/>
         </div>
       </Router>

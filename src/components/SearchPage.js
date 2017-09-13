@@ -5,16 +5,16 @@ import BookList from './BookList'
 function SearchPage(props) {
   const {
     byId,
-    allIds,
     addTocurrentlyReading,
     addToWantRead,
     addToRead,
-    getSearchtedBooks
+    getSearchtedBooks,
+    searchBooks
   } = props
 
   return (
     <div id="search-page">
-      <SearchBar byId={byId} allIds={allIds}/>
+      <SearchBar searchBooks={searchBooks} />
       <BookList
         books={getSearchtedBooks()}
         addTocurrentlyReading={addTocurrentlyReading}

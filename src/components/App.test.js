@@ -18,7 +18,7 @@ describe('App component', () => {
     <App
       router={MemoryRouter}
       initialEntries={[ '/' ]}
-      initialIndex={1} />
+      initialIndex={0} />
   )
 
   if (!process.env.CI) {
@@ -80,12 +80,15 @@ describe('App component', () => {
       .toEqual(false)
   })
 
-  it('Search page', () => {
+  it('Searching a book', () => {
     const wrapper = mount(
       <App
         router={MemoryRouter}
         initialEntries={[ '/search' ]}
-        initialIndex={1} />
+        initialIndex={0} />
     )
+    const input = wrapper.find('#search-input')
+    input.simulate('input', { target: { value: 'Linux' } })
+    expect(wrapper.state('books').query).toEqual('Linux')
   })
 })
