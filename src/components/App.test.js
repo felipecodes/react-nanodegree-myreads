@@ -6,8 +6,8 @@ import App from './App'
 import fixtures from '../fixtures'
 
 // These tests do not run in the CI environment
-describe('Snapshots tests of the App component', () => {
-  if (!process.env.CI) {
+if (!process.env.CI) {
+  describe('Snapshots tests of the App component', () => {
     it('App renders correctly in home page', () => {
       const test = shallow(
         <App
@@ -27,8 +27,8 @@ describe('Snapshots tests of the App component', () => {
       )
       expect(test).toMatchSnapshot('Search page')
     })
-  }
-})
+  })
+}
 
 describe('Moving the books between the shelves', () => {
   // These promise is returned by the fetch global function
