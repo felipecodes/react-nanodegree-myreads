@@ -5,18 +5,8 @@ import sinon from 'sinon'
 import App from './App'
 import fixtures from '../fixtures'
 
-describe('App component', () => {
-  const promise = Promise.resolve({
-    json() {
-      return fixtures
-    }
-  })
-
-  sinon.stub(global, 'fetch').callsFake(() => promise)
-
-  // Mount using the default location: { pathname: "/" }
-  const wrapper = mount(<App router={MemoryRouter} />)
-
+// These tests do not run in the CI environment
+describe('Snapshots tests of the App component', () => {
   if (!process.env.CI) {
     it('App renders correctly in home page', () => {
       const test = shallow(
@@ -38,17 +28,26 @@ describe('App component', () => {
       expect(test).toMatchSnapshot('Search page')
     })
   }
+})
 
-  it('data fetch in componentDidMount', () => {
+describe('Moving the books between the shelves', () => {
+  // These promise is returned by the fetch global function
+  const promise = Promise.resolve({ json: () => fixtures })
+  sinon.stub(global, 'fetch').callsFake(() => promise)
+
+  // Mount app wrapper using the default location: { pathname: "/" }
+  const wrapper = mount(<App router={MemoryRouter} />)
+
+  it('Data fetch in componentDidMount', () => {
     promise.then(() => {
       const BOOK = 'jAUODAAAQBAJ'
-      const { byId, allIds} = wrapper.state('books')
+      const { byId, allIds } = wrapper.state('books')
       expect(byId).toHaveProperty(BOOK)
       expect(allIds.indexOf(BOOK) > -1).toEqual(true)
     })
   })
 
-  it('adding book in currently list', () => {
+  it('Adding book in currently list', () => {
     const BOOK = 'jAUODAAAQBAJ'
     wrapper.node.addTocurrentlyReading({ id: BOOK })
     const {
@@ -64,7 +63,7 @@ describe('App component', () => {
       .toEqual(false)
   })
 
-  it('adding book in want list', () => {
+  it('Adding book in want list', () => {
     const BOOK = 'sJf1vQAACAAJ'
     wrapper.node.addToWantRead({ id: BOOK })
     const {
@@ -80,7 +79,7 @@ describe('App component', () => {
       .toEqual(false)
   })
 
-  it('adding book in read list', () => {
+  it('Adding book in read list', () => {
     const BOOK = 'nggnmAEACAAJ'
     wrapper.node.addToRead({ id: BOOK })
     const {
@@ -96,7 +95,7 @@ describe('App component', () => {
       .toEqual(false)
   })
 
-  it('adding the book from currently list to currently list', () => {
+  it('Try move book that is already on the currently list to the currently list', () => {
     const BOOK = 'jAUODAAAQBAJ'
 
     wrapper.node.addTocurrentlyReading({ id: BOOK })
@@ -116,6 +115,148 @@ describe('App component', () => {
     expect(isBookInWantList)
       .toEqual(false)
     expect(isBookInReadList)
+      .toEqual(false)
+  })
+
+  it('Move book that is on the want list to the currently list', () => {
+    const BOOK = 'IOejDAAAQBAJ'
+
+    wrapper.node.addToWantRead({ id: BOOK })
+    wrapper.node.addTocurrentlyReading({ id: BOOK })
+
+    const {
+      currentlyReadingIds,
+      wantReadIds,
+      readIds
+    } = wrapper.state('books')
+    const isBookInWantList = wantReadIds.indexOf(BOOK) > -1
+    const isBookInReadList = readIds.indexOf(BOOK) > -1
+    const booksInCurrently = currentlyReadingIds.filter(id => id === BOOK)
+    const [book] = booksInCurrently
+
+    expect(booksInCurrently.length === 1 && book === BOOK)
+      .toEqual(true)
+    expect(isBookInWantList)
+      .toEqual(false)
+    expect(isBookInReadList)
+      .toEqual(false)
+  })
+
+  it('adding the book from want list to currently list', () => {
+    const BOOK = 'IOejDAAAQBAJ'
+
+    wrapper.node.addToWantRead({ id: BOOK })
+    wrapper.node.addTocurrentlyReading({ id: BOOK })
+
+    const {
+      currentlyReadingIds,
+      wantReadIds,
+      readIds
+    } = wrapper.state('books')
+    const isBookInWantList = wantReadIds.indexOf(BOOK) > -1
+    const isBookInReadList = readIds.indexOf(BOOK) > -1
+    const booksInCurrently = currentlyReadingIds.filter(id => id === BOOK)
+    const [book] = booksInCurrently
+
+    expect(booksInCurrently.length === 1 && book === BOOK)
+      .toEqual(true)
+    expect(isBookInWantList)
+      .toEqual(false)
+    expect(isBookInReadList)
+      .toEqual(false)
+  })
+
+  it('adding the book from read list to currently list', () => {
+    const BOOK = 'IOejDAAAQBAJ'
+
+    wrapper.node.addToRead({ id: BOOK })
+    wrapper.node.addTocurrentlyReading({ id: BOOK })
+
+    const {
+      currentlyReadingIds,
+      wantReadIds,
+      readIds
+    } = wrapper.state('books')
+    const isBookInWantList = wantReadIds.indexOf(BOOK) > -1
+    const isBookInReadList = readIds.indexOf(BOOK) > -1
+    const booksInCurrently = currentlyReadingIds.filter(id => id === BOOK)
+    const [book] = booksInCurrently
+
+    expect(booksInCurrently.length === 1 && book === BOOK)
+      .toEqual(true)
+    expect(isBookInWantList)
+      .toEqual(false)
+    expect(isBookInReadList)
+      .toEqual(false)
+  })
+
+  it('adding the book from want list to want list', () => {
+    const BOOK = 'sJf1vQAACAAJ'
+    wrapper.node.addToWantRead({ id: BOOK })
+
+    const {
+      currentlyReadingIds,
+      wantReadIds,
+      readIds
+    } = wrapper.state('books')
+
+    const isBookInCurrently = currentlyReadingIds.indexOf(BOOK) > -1
+    const isBookInReadList = readIds.indexOf(BOOK) > -1
+    const booksInWantList = wantReadIds.filter(id => id === BOOK)
+    const [book] = booksInWantList
+
+    expect(booksInWantList.length === 1 && book === BOOK)
+      .toEqual(true)
+    expect(isBookInCurrently)
+      .toEqual(false)
+    expect(isBookInReadList)
+      .toEqual(false)
+  })
+
+  it('adding the book from read list to want list', () => {
+    const BOOK = 'sJf1vQAACAAJ'
+    wrapper.node.addToRead({ id: BOOK })
+    wrapper.node.addToWantRead({ id: BOOK })
+
+    const {
+      currentlyReadingIds,
+      wantReadIds,
+      readIds
+    } = wrapper.state('books')
+
+    const isBookInCurrently = currentlyReadingIds.indexOf(BOOK) > -1
+    const isBookInReadList = readIds.indexOf(BOOK) > -1
+    const booksInWantList = wantReadIds.filter(id => id === BOOK)
+    const [book] = booksInWantList
+
+    expect(booksInWantList.length === 1 && book === BOOK)
+      .toEqual(true)
+    expect(isBookInCurrently)
+      .toEqual(false)
+    expect(isBookInReadList)
+      .toEqual(false)
+  })
+
+  it('adding the book from read list to read list', () => {
+    const BOOK = 'nggnmAEACAAJ'
+    wrapper.node.addToRead({ id: BOOK })
+
+    const {
+      currentlyReadingIds,
+      wantReadIds,
+      readIds
+    } = wrapper.state('books')
+
+    const isBookInCurrently = currentlyReadingIds.indexOf(BOOK) > -1
+    const isBookInWantList = wantReadIds.indexOf(BOOK) > -1
+    const booksInReadList = readIds.filter(id => id === BOOK)
+    const [book] = booksInReadList
+
+    expect(booksInReadList.length === 1 && book === BOOK)
+      .toEqual(true)
+    expect(isBookInCurrently)
+      .toEqual(false)
+    expect(isBookInWantList)
       .toEqual(false)
   })
 
