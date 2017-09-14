@@ -142,36 +142,19 @@ class App extends Component {
    */
 
   searchBooks = query => {
-    this.setState({
-      books: Object.assign(this.state.books, { query })
-    })
-  }
-
-  getSearchtedBooks = () => {
-    const { byId, allIds, query } = this.state.books
-    if (query === '') {
-      return []
-    }
-
-    const match = new RegExp(escapeRegExp(query), 'i')
-    const filtered = allIds.filter(id => match.test(byId[id].title))
-    return filtered.map(id => byId[id])
+    BooksAPI.search()
+      .then(books => {
+        this.setState({
+          books: Object.assign(this.state.books, books)
+        })
+      })
   }
 
   componentDidMount() {
     BooksAPI.getAll()
-      .then(res => res.json())
-      .then(data => {
-        const byId = {}
-        const allIds = []
-
-        for (const book of data.books) {
-          byId[book.id] = book
-          allIds.push(book.id)
-        }
-
+      .then(books => {
         this.setState({
-          books: Object.assign(this.state.books,  { byId, allIds })
+          books: Object.assign(this.state.books,  books)
         })
       })
   }
@@ -185,6 +168,7 @@ class App extends Component {
 
     const {
       byId,
+      allIds,
       currentlyReadingIds,
       wantReadIds,
       readIds
@@ -211,10 +195,11 @@ class App extends Component {
           )}/>
           <Route exact path="/search" render={() => (
             <SearchPage
+              byId={byId}
+              allIds={allIds}
               addTocurrentlyReading={this.addTocurrentlyReading}
               addToWantRead={this.addToWantRead}
               addToRead={this.addToRead}
-              getSearchtedBooks={this.getSearchtedBooks}
               searchBooks={this.searchBooks} />
           )}/>
         </div>

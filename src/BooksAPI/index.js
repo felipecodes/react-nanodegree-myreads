@@ -17,6 +17,8 @@ export const get = (bookId) =>
 
 export const getAll = () =>
   fetch(`${api}/books`, { headers })
+    .then(res => res.json())
+    .then(data => normalizr(data))
 
 export const update = (book, shelf) =>
   fetch(`${api}/books/${book.id}`, {
@@ -36,17 +38,18 @@ export const search = (query, maxResults) =>
       'Content-Type': 'application/json'
     },
     body: JSON.stringify({ query, maxResults })
-  }).then(res => res.json())
-    .then(data => data.books)
+  })
+    .then(res => res.json())
+    .then(data => normalizr(data))
 
-export const normalizr = booksArray => {
-  const books = {}
+export const normalizr = ({ books }) => {
+  const byId = {}
   const allIds = []
 
-  for (const book of booksArray) {
-    books[book.id] = book
+  for (const book of books) {
+    byId[book.id] = book
     allIds.push(book.id)
   }
 
-  return { books, allIds }
+  return { byId, allIds }
 }

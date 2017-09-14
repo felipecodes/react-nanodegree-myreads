@@ -269,6 +269,7 @@ describe('Moving the books between the shelves', () => {
     )
     const input = wrapper.find('#search-input')
     input.simulate('input', { target: { value: 'Linux' } })
-    expect(wrapper.state('books').query).toEqual('Linux')
+    console.log(wrapper.state('books').allIds.length)
+    expect(wrapper.state('books').allIds.length).toEqual(0)
   })
 })
