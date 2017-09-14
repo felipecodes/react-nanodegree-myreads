@@ -6,8 +6,8 @@ import { books } from '../fixtures'
 
 const [book] = books
 
-describe('The Book component', () => {
-  if (!process.env.CI) {
+if (!process.env.CI) {
+  describe('', () => {
     it('Book render correctly', () => {
       const addTocurrentlyReading = jest.fn()
       const addToWantRead = jest.fn()
@@ -22,8 +22,10 @@ describe('The Book component', () => {
       )
       expect(wrapper).toMatchSnapshot()
     })
-  }
+  })
+}
 
+describe('The Book component', () => {
   it('Book added in currently reading list', () =>  {
     const addTocurrentlyReading = jest.fn()
     const addToWantRead = jest.fn()
@@ -37,12 +39,7 @@ describe('The Book component', () => {
         addToRead={addToRead} />,
     )
 
-    sinon.spy(Book.prototype, 'componentWillUpdate')
     wrapper.find('select').simulate('change', { target: { value: 'Currently Reading' } })
-    expect(wrapper.state('list')).toEqual('Currently Reading')
-
-    wrapper.update()
-    expect(Book.prototype.componentWillUpdate.callCount).toEqual(2)
     expect(addTocurrentlyReading).toHaveBeenCalledTimes(1)
   })
 
@@ -59,12 +56,7 @@ describe('The Book component', () => {
         addToRead={addToRead} />,
     )
 
-    Book.prototype.componentWillUpdate.reset()
     wrapper.find('select').simulate('change', { target: { value: 'Want to Read' } })
-    expect(wrapper.state('list')).toEqual('Want to Read')
-
-    wrapper.update()
-    expect(Book.prototype.componentWillUpdate.callCount).toEqual(2)
     expect(addToWantRead).toHaveBeenCalledTimes(1)
   })
 
@@ -81,12 +73,27 @@ describe('The Book component', () => {
         addToRead={addToRead} />,
     )
 
-    Book.prototype.componentWillUpdate.reset()
     wrapper.find('select').simulate('change', { target: { value: 'Read' } })
-    expect(wrapper.state('list')).toEqual('Read')
-
-    wrapper.update()
-    expect(Book.prototype.componentWillUpdate.callCount).toEqual(2)
     expect(addToRead).toHaveBeenCalledTimes(1)
   })
+
+  it('Book added in unknown list', () => {
+    const addTocurrentlyReading = jest.fn()
+    const addToWantRead = jest.fn()
+    const addToRead = jest.fn()
+
+    const wrapper = mount(
+      <Book
+        book={book}
+        addTocurrentlyReading={addTocurrentlyReading}
+        addToWantRead={addToWantRead}
+        addToRead={addToRead} />,
+    )
+
+    wrapper.find('select').simulate('change', { target: { value: 'Unknown' } })
+    expect(addTocurrentlyReading).toHaveBeenCalledTimes(0)
+    expect(addToWantRead).toHaveBeenCalledTimes(0)
+    expect(addToRead).toHaveBeenCalledTimes(0)
+  })
+
 })

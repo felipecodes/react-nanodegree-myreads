@@ -2,10 +2,9 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 
 class Book extends Component {
-  state = { list: '' }
-
-  componentWillUpdate() {
-    switch (this.state.list) {
+  handleChange = event => {
+    event.preventDefault()
+    switch (event.target.value) {
       case 'Currently Reading':
         this.props.addTocurrentlyReading(this.props.book)
         break
@@ -17,11 +16,6 @@ class Book extends Component {
         break
       default:
     }
-  }
-
-  handleChange = event => {
-    event.preventDefault()
-    this.setState({ list: event.target.value })
   }
 
   render() {
