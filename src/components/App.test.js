@@ -51,33 +51,48 @@ describe('App component', () => {
   it('adding book in currently list', () => {
     const BOOK = 'jAUODAAAQBAJ'
     wrapper.node.addTocurrentlyReading({ id: BOOK })
-    expect(wrapper.state('books').currentlyReadingIds.indexOf(BOOK) > -1)
+    const {
+      currentlyReadingIds,
+      wantReadIds,
+      readIds
+    } = wrapper.state('books')
+    expect(currentlyReadingIds.indexOf(BOOK) > -1)
       .toEqual(true)
-    expect(wrapper.state('books').wantReadIds.indexOf(BOOK) > -1)
+    expect(wantReadIds.indexOf(BOOK) > -1)
       .toEqual(false)
-    expect(wrapper.state('books').readIds.indexOf(BOOK) > -1)
+    expect(readIds.indexOf(BOOK) > -1)
       .toEqual(false)
   })
 
   it('adding book in want list', () => {
     const BOOK = 'sJf1vQAACAAJ'
     wrapper.node.addToWantRead({ id: BOOK })
-    expect(wrapper.state('books').wantReadIds.indexOf(BOOK) > -1)
+    const {
+      currentlyReadingIds,
+      wantReadIds,
+      readIds
+    } = wrapper.state('books')
+    expect(wantReadIds.indexOf(BOOK) > -1)
       .toEqual(true)
-    expect(wrapper.state('books').currentlyReadingIds.indexOf(BOOK) > -1)
+    expect(currentlyReadingIds.indexOf(BOOK) > -1)
       .toEqual(false)
-    expect(wrapper.state('books').readIds.indexOf(BOOK) > -1)
+    expect(readIds.indexOf(BOOK) > -1)
       .toEqual(false)
   })
 
   it('adding book in read list', () => {
     const BOOK = 'nggnmAEACAAJ'
     wrapper.node.addToRead({ id: BOOK })
-    expect(wrapper.state('books').readIds.indexOf(BOOK) > -1)
+    const {
+      currentlyReadingIds,
+      wantReadIds,
+      readIds
+    } = wrapper.state('books')
+    expect(readIds.indexOf(BOOK) > -1)
       .toEqual(true)
-    expect(wrapper.state('books').currentlyReadingIds.indexOf(BOOK) > -1)
+    expect(currentlyReadingIds.indexOf(BOOK) > -1)
       .toEqual(false)
-    expect(wrapper.state('books').wantReadIds.indexOf(BOOK) > -1)
+    expect(wantReadIds.indexOf(BOOK) > -1)
       .toEqual(false)
   })
 
