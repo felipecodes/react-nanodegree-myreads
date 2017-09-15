@@ -3,6 +3,7 @@ import Paper from 'material-ui/Paper'
 import DropDownMenu from 'material-ui/DropDownMenu'
 import MenuItem from 'material-ui/MenuItem'
 import PropTypes from 'prop-types'
+import style from '../style.css'
 
 class Book extends Component {
   handleChange = event => {
@@ -27,7 +28,7 @@ class Book extends Component {
       <li>
         <Paper>
           <header>
-            <h2>{book.title}</h2>
+            <h2 className={style.test}>{book.title}</h2>
             <DropDownMenu value={this.props.list} onChange={this.handleChange}>
               <MenuItem value="none" primaryText="None" />
               <MenuItem value="currentlyReading" primaryText="Currently reading" />
