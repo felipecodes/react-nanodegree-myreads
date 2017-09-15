@@ -10,6 +10,24 @@ const headers = {
   'Authorization': token
 }
 
+function normalizr({ books }) {
+  const state = {
+    byId: {},
+    allIds: [],
+    currentlyReading: [],
+    wantToRead: [],
+    read: []
+  }
+
+  for (const book of books) {
+    state.byId[book.id] = book
+    state.allIds.push(book.id)
+    state[book.shelf].push(book.id)
+  }
+
+  return state
+}
+
 export const get = (bookId) =>
   fetch(`${api}/books/${bookId}`, { headers })
     .then(res => res.json())
@@ -42,15 +60,3 @@ export const search = (query, maxResults) =>
   })
     .then(res => res.json())
     .then(data => normalizr(data))
-
-export const normalizr = ({ books }) => {
-  const byId = {}
-  const allIds = []
-
-  for (const book of books) {
-    byId[book.id] = book
-    allIds.push(book.id)
-  }
-
-  return { byId, allIds }
-}

@@ -7,7 +7,7 @@ function SearchPage(props) {
     byId,
     allIds,
     addTocurrentlyReading,
-    addToWantRead,
+    addTowantToRead,
     addToRead,
     searchBooks
   } = props
@@ -20,7 +20,7 @@ function SearchPage(props) {
       <BookList
         books={books}
         addTocurrentlyReading={addTocurrentlyReading}
-        addToWantRead={addToWantRead}
+        addTowantToRead={addTowantToRead}
         addToRead={addToRead} />
     </div>
   )

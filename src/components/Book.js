@@ -4,14 +4,15 @@ import PropTypes from 'prop-types'
 class Book extends Component {
   handleChange = event => {
     event.preventDefault()
+
     switch (event.target.value) {
-      case 'Currently Reading':
+      case 'currentlyReading':
         this.props.addTocurrentlyReading(this.props.book)
         break
-      case 'Want to Read':
-        this.props.addToWantRead(this.props.book)
+      case 'wantToRead':
+        this.props.addTowantToRead(this.props.book)
         break
-      case 'Read':
+      case 'read':
         this.props.addToRead(this.props.book)
         break
       default:
@@ -25,11 +26,11 @@ class Book extends Component {
         <h1>{book.title}</h1>
         <h2>{book.subtitle}</h2>
 
-        <select onChange={this.handleChange}>
-          <option></option>
-          <option>Currently Reading</option>
-          <option>Want Read</option>
-          <option>Read</option>
+        <select value={this.props.list} onChange={this.handleChange}>
+          <option value="none">None</option>
+          <option value="currentlyReading">Currently reading</option>
+          <option value="wantToRead">Want to read</option>
+          <option value="read">Read</option>
         </select>
       </li>
     )
@@ -39,7 +40,7 @@ class Book extends Component {
 Book.propTypes = {
   book: PropTypes.object.isRequired,
   addTocurrentlyReading: PropTypes.func.isRequired,
-  addToWantRead: PropTypes.func.isRequired,
+  addTowantToRead: PropTypes.func.isRequired,
   addToRead: PropTypes.func.isRequired
 }
 

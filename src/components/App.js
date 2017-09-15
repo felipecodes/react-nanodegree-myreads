@@ -11,9 +11,9 @@ class App extends Component {
     books: {
       byId: {},
       allIds: [],
-      currentlyReadingIds: [],
-      wantReadIds: [],
-      readIds: [],
+      currentlyReading: [],
+      wantToRead: [],
+      read: [],
       query: ''
     }
   }
@@ -24,77 +24,37 @@ class App extends Component {
    */
 
   addTocurrentlyReading = ({ id }) => {
-    this.setState(prevState => {
-      const {
-        currentlyReadingIds,
-        wantReadIds,
-        readIds
-      } = prevState.books
+    const SHELF = 'currentlyReading'
+    // Does not change if already exists
+    if (this.state.books.byId[id].shelf === SHELF) {
+      return
+    }
 
-      // Does not change if already exists
-      if (currentlyReadingIds.indexOf(id) > -1) {
-        return prevState
-      }
-
-      // Remove the book of the "want to read" list
-      let index = wantReadIds.indexOf(id)
-      if (index > -1) {
-        wantReadIds.splice(index, 1)
-      }
-
-      // Remove the book of the "read" list
-      index = readIds.indexOf(id)
-      if (index > -1) {
-        readIds.splice(index, 1)
-      }
-
-      return {
-        books: Object.assign(prevState.books, {
-          currentlyReadingIds: [id, ...currentlyReadingIds],
-          wantReadIds,
-          readIds
+    BooksAPI.update({ id }, SHELF)
+      .then(books => {
+        this.setState({
+          books: Object.assign(this.state.books, books)
         })
-      }
-    })
+      })
   }
 
   /**
    * @param {Object} book The book object
    */
 
-  addToWantRead = ({ id }) => {
-    this.setState(prevState => {
-      const {
-        currentlyReadingIds,
-        wantReadIds,
-        readIds
-      } = prevState.books
+  addTowantToRead = ({ id }) => {
+    const SHELF = 'wantToRead'
+    // Does not change if already exists
+    if (this.state.books.byId[id].shelf === SHELF) {
+      return
+    }
 
-      // Does not change if already exists
-      if (wantReadIds.indexOf(id) > -1) {
-        return prevState
-      }
-
-      // Remove the book of the "currently reading" list
-      let index = currentlyReadingIds.indexOf(id)
-      if (index > -1) {
-        currentlyReadingIds.splice(index, 1)
-      }
-
-      // Remove the book of the "read" list
-      index = readIds.indexOf(id)
-      if (index > -1) {
-        readIds.splice(index, 1)
-      }
-
-      return {
-        books: Object.assign(prevState.books, {
-          currentlyReadingIds,
-          wantReadIds: [id, ...wantReadIds],
-          readIds
+    BooksAPI.update({ id }, SHELF)
+      .then(books => {
+        this.setState({
+          books: Object.assign(this.state.books, books)
         })
-      }
-    })
+      })
   }
 
   /**
@@ -102,38 +62,18 @@ class App extends Component {
    */
 
   addToRead = ({ id }) => {
-    this.setState(prevState => {
-      const {
-        currentlyReadingIds,
-        wantReadIds,
-        readIds
-      } = prevState.books
+    const SHELF = 'read'
+    // Does not change if already exists
+    if (this.state.books.byId[id].shelf === SHELF) {
+      return
+    }
 
-      // Does not change if already exists
-      if (readIds.indexOf(id) > -1) {
-        return prevState
-      }
-
-      // Remove the book of the "currently reading" list
-      let index = currentlyReadingIds.indexOf(id)
-      if (index > -1) {
-        currentlyReadingIds.splice(index, 1)
-      }
-
-      // Remove the book of the "want to read" list
-      index = wantReadIds.indexOf(id)
-      if (index > -1) {
-        wantReadIds.splice(index, 1)
-      }
-
-      return {
-        books: Object.assign(prevState.books, {
-          currentlyReadingIds,
-          wantReadIds,
-          readIds: [id, ...readIds]
+    BooksAPI.update({ id }, SHELF)
+      .then(books => {
+        this.setState({
+          books: Object.assign(this.state.books, books)
         })
-      }
-    })
+      })
   }
 
   /**
@@ -169,9 +109,9 @@ class App extends Component {
     const {
       byId,
       allIds,
-      currentlyReadingIds,
-      wantReadIds,
-      readIds
+      currentlyReading,
+      wantToRead,
+      read
     } = this.state.books
 
     const conditionalProps = initialEntries ? {
@@ -186,11 +126,11 @@ class App extends Component {
           <Route exact path='/' render={() => (
             <HomePage
               byId={byId}
-              currentlyReadingIds={currentlyReadingIds}
-              wantReadIds={wantReadIds}
-              readIds={readIds}
+              currentlyReading={currentlyReading}
+              wantToRead={wantToRead}
+              read={read}
               addTocurrentlyReading={this.addTocurrentlyReading}
-              addToWantRead={this.addToWantRead}
+              addTowantToRead={this.addTowantToRead}
               addToRead={this.addToRead} />
           )}/>
           <Route exact path="/search" render={() => (
@@ -198,7 +138,7 @@ class App extends Component {
               byId={byId}
               allIds={allIds}
               addTocurrentlyReading={this.addTocurrentlyReading}
-              addToWantRead={this.addToWantRead}
+              addTowantToRead={this.addTowantToRead}
               addToRead={this.addToRead}
               searchBooks={this.searchBooks} />
           )}/>

@@ -6,7 +6,7 @@ import If from './If'
 function BookList(props) {
   const {
     addTocurrentlyReading,
-    addToWantRead,
+    addTowantToRead,
     addToRead,
     books
   } = props
@@ -19,7 +19,7 @@ function BookList(props) {
             key={book.id}
             book={book}
             addTocurrentlyReading={addTocurrentlyReading}
-            addToWantRead={addToWantRead}
+            addTowantToRead={addTowantToRead}
             addToRead={addToRead} />
         ))}
       </ul>
@@ -30,7 +30,7 @@ function BookList(props) {
 BookList.propTypes = {
   books: PropTypes.array.isRequired,
   addTocurrentlyReading: PropTypes.func.isRequired,
-  addToWantRead: PropTypes.func.isRequired,
+  addTowantToRead: PropTypes.func.isRequired,
   addToRead: PropTypes.func.isRequired
 }
 

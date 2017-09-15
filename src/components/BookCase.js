@@ -5,11 +5,11 @@ import BookCaseRow from './BookCaseRow'
 function BookCase(props) {
   const {
     byId,
-    currentlyReadingIds,
-    wantReadIds,
-    readIds,
+    currentlyReading,
+    wantToRead,
+    read,
     addTocurrentlyReading,
-    addToWantRead,
+    addTowantToRead,
     addToRead
   } = props
 
@@ -17,24 +17,27 @@ function BookCase(props) {
     <div>
       <BookCaseRow
         title="Currently Reading"
+        list="currentlyReading"
         byId={byId}
-        booksIds={currentlyReadingIds}
+        booksIds={currentlyReading}
         addTocurrentlyReading={addTocurrentlyReading}
-        addToWantRead={addToWantRead}
+        addTowantToRead={addTowantToRead}
         addToRead={addToRead} />
       <BookCaseRow
         title="Want to Read"
+        list="wantToRead"
         byId={byId}
-        booksIds={wantReadIds}
+        booksIds={wantToRead}
         addTocurrentlyReading={addTocurrentlyReading}
-        addToWantRead={addToWantRead}
+        addTowantToRead={addTowantToRead}
         addToRead={addToRead} />
       <BookCaseRow
         title="Read"
+        list="read"
         byId={byId}
-        booksIds={readIds}
+        booksIds={read}
         addTocurrentlyReading={addTocurrentlyReading}
-        addToWantRead={addToWantRead}
+        addTowantToRead={addTowantToRead}
         addToRead={addToRead} />
     </div>
   )
@@ -42,11 +45,11 @@ function BookCase(props) {
 
 BookCase.propTypes = {
   byId: PropTypes.object.isRequired,
-  currentlyReadingIds: PropTypes.array.isRequired,
-  wantReadIds: PropTypes.array.isRequired,
-  readIds: PropTypes.array.isRequired,
+  currentlyReading: PropTypes.array.isRequired,
+  wantToRead: PropTypes.array.isRequired,
+  read: PropTypes.array.isRequired,
   addTocurrentlyReading: PropTypes.func.isRequired,
-  addToWantRead: PropTypes.func.isRequired,
+  addTowantToRead: PropTypes.func.isRequired,
   addToRead: PropTypes.func.isRequired
 }
 

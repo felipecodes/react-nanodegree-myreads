@@ -5,11 +5,11 @@ import BookCase from './BookCase'
 function HomePage(props) {
   const {
     byId,
-    currentlyReadingIds,
-    wantReadIds,
-    readIds,
+    currentlyReading,
+    wantToRead,
+    read,
     addTocurrentlyReading,
-    addToWantRead,
+    addTowantToRead,
     addToRead,
   } = props
 
@@ -17,11 +17,11 @@ function HomePage(props) {
     <div>
       <BookCase
         byId={byId}
-        currentlyReadingIds={currentlyReadingIds}
-        wantReadIds={wantReadIds}
-        readIds={readIds}
+        currentlyReading={currentlyReading}
+        wantToRead={wantToRead}
+        read={read}
         addTocurrentlyReading={addTocurrentlyReading}
-        addToWantRead={addToWantRead}
+        addTowantToRead={addTowantToRead}
         addToRead={addToRead} />
       <Link to="/search" id="search-button">Search</Link>
     </div>

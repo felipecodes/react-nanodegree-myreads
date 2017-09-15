@@ -6,10 +6,11 @@ import If from './If'
 function BookCaseRow(props) {
   const {
     title,
+    list,
     byId,
     booksIds,
     addTocurrentlyReading,
-    addToWantRead,
+    addTowantToRead,
     addToRead
   } = props
 
@@ -21,9 +22,10 @@ function BookCaseRow(props) {
           {booksIds.map(id => (
             <Book
               key={id}
+              list={list}
               book={byId[id]}
               addTocurrentlyReading={addTocurrentlyReading}
-              addToWantRead={addToWantRead}
+              addTowantToRead={addTowantToRead}
               addToRead={addToRead} />
           ))}
         </ul>
@@ -37,7 +39,7 @@ BookCaseRow.propTypes = {
   byId: PropTypes.object.isRequired,
   booksIds: PropTypes.array.isRequired,
   addTocurrentlyReading: PropTypes.func.isRequired,
-  addToWantRead: PropTypes.func.isRequired,
+  addTowantToRead: PropTypes.func.isRequired,
   addToRead: PropTypes.func.isRequired
 }
 
