@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import { Route } from 'react-router-dom'
+import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider'
 import escapeRegExp from 'escape-string-regexp'
 import Header from './Header'
 import HomePage from './HomePage'
@@ -137,14 +138,16 @@ class App extends Component {
         <div>
           <Header />
           <Route exact path='/' render={() => (
-            <HomePage
-              byId={byId}
-              currentlyReading={currentlyReading}
-              wantToRead={wantToRead}
-              read={read}
-              addTocurrentlyReading={this.addTocurrentlyReading}
-              addTowantToRead={this.addTowantToRead}
-              addToRead={this.addToRead} />
+            <MuiThemeProvider>
+              <HomePage
+                byId={byId}
+                currentlyReading={currentlyReading}
+                wantToRead={wantToRead}
+                read={read}
+                addTocurrentlyReading={this.addTocurrentlyReading}
+                addTowantToRead={this.addTowantToRead}
+                addToRead={this.addToRead} />
+            </MuiThemeProvider>
           )}/>
           <Route exact path="/search" render={() => (
             <SearchPage

@@ -1,4 +1,7 @@
 import React, { Component } from 'react'
+import Paper from 'material-ui/Paper'
+import DropDownMenu from 'material-ui/DropDownMenu'
+import MenuItem from 'material-ui/MenuItem'
 import PropTypes from 'prop-types'
 
 class Book extends Component {
@@ -22,15 +25,17 @@ class Book extends Component {
     const { book } = this.props
     return (
       <li>
-        <h1>{book.title}</h1>
-        <h2>{book.subtitle}</h2>
-
-        <select value={this.props.list} onChange={this.handleChange}>
-          <option value="none">None</option>
-          <option value="currentlyReading">Currently reading</option>
-          <option value="wantToRead">Want to read</option>
-          <option value="read">Read</option>
-        </select>
+        <Paper>
+          <header>
+            <h2>{book.title}</h2>
+            <DropDownMenu value={this.props.list} onChange={this.handleChange}>
+              <MenuItem value="none" primaryText="None" />
+              <MenuItem value="currentlyReading" primaryText="Currently reading" />
+              <MenuItem value="wantToRead" primaryText="Want to read" />
+              <MenuItem value="read" primaryText="Read" />
+            </DropDownMenu>
+          </header>
+        </Paper>
       </li>
     )
   }
