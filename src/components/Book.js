@@ -1,9 +1,9 @@
 import React, { Component } from 'react'
+import PropTypes from 'prop-types'
 import Paper from 'material-ui/Paper'
 import DropDownMenu from 'material-ui/DropDownMenu'
 import MenuItem from 'material-ui/MenuItem'
-import PropTypes from 'prop-types'
-import style from '../style.css'
+import css from './Book.css'
 
 class Book extends Component {
   handleChange = event => {
@@ -25,11 +25,14 @@ class Book extends Component {
   render() {
     const { book } = this.props
     return (
-      <li>
-        <Paper>
-          <header>
-            <h2 className={style.test}>{book.title}</h2>
-            <DropDownMenu value={this.props.list} onChange={this.handleChange}>
+      <li className={css.book}>
+        <Paper style={{height: '350px'}}>
+          <header className={css.header}>
+            <h2 className={css.title}>{book.title}</h2>
+            <DropDownMenu
+              className={css.menu}
+              value={this.props.list}
+              onChange={this.handleChange}>
               <MenuItem value="none" primaryText="None" />
               <MenuItem value="currentlyReading" primaryText="Currently reading" />
               <MenuItem value="wantToRead" primaryText="Want to read" />

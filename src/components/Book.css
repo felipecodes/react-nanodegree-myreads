@@ -1,0 +1,28 @@
+.book {
+  position: relative;
+  flex-basis: calc(25% - 10px);
+  margin-right: 5px;
+  margin-left: 5px;
+}
+
+.header {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+.title {
+  margin-top: 0;
+  margin-bottom: 0;
+  text-align: center;
+  font-weight: 600;
+  font-size: 0.9em;
+}
+
+.menu {
+  margin-right: auto;
+  margin-left: auto;
+}

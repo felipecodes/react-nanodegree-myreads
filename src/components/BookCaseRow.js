@@ -2,6 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import Book from './Book'
 import If from './If'
+import css from './BookCaseRow.css'
 
 function BookCaseRow(props) {
   const {
@@ -18,7 +19,7 @@ function BookCaseRow(props) {
     <div>
       <h1>{title}</h1>
       <If test={booksIds && booksIds.length > 0}>
-        <ul>
+        <ul className={css.list}>
           {booksIds.map(id => (
             <Book
               key={id}

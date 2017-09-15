@@ -150,15 +150,17 @@ class App extends Component {
             </MuiThemeProvider>
           )}/>
           <Route exact path="/search" render={() => (
-            <SearchPage
-              byId={byId}
-              allIds={allIds}
-              search={search}
-              addTocurrentlyReading={this.addTocurrentlyReading}
-              addTowantToRead={this.addTowantToRead}
-              addToRead={this.addToRead}
-              searchBooks={this.searchBooks}
-              searchClean={this.searchClean} />
+            <MuiThemeProvider>
+              <SearchPage
+                byId={byId}
+                allIds={allIds}
+                search={search}
+                addTocurrentlyReading={this.addTocurrentlyReading}
+                addTowantToRead={this.addTowantToRead}
+                addToRead={this.addToRead}
+                searchBooks={this.searchBooks}
+                searchClean={this.searchClean} />
+            </MuiThemeProvider>
           )}/>
         </div>
       </Router>
