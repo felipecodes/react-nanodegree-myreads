@@ -13,8 +13,7 @@ class App extends Component {
       allIds: [],
       currentlyReading: [],
       wantToRead: [],
-      read: [],
-      query: ''
+      read: []
     }
   }
 
