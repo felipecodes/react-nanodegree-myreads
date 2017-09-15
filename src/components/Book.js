@@ -6,9 +6,9 @@ import MenuItem from 'material-ui/MenuItem'
 import css from './Book.css'
 
 class Book extends Component {
-  handleChange = event => {
+  handleChange = (event, index, value) => {
     event.preventDefault()
-    switch (event.target.value) {
+    switch (value) {
       case 'currentlyReading':
         this.props.addTocurrentlyReading(this.props.book)
         break
