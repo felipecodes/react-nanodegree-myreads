@@ -22,7 +22,9 @@ function normalizr({ books }) {
   for (const book of books) {
     state.byId[book.id] = book
     state.allIds.push(book.id)
-    state[book.shelf].push(book.id)
+    if (state[book.shelf]) {
+      state[book.shelf].push(book.id)
+    }
   }
 
   return state
@@ -59,4 +61,10 @@ export const search = (query, maxResults) =>
     body: JSON.stringify({ query, maxResults })
   })
     .then(res => res.json())
-    .then(data => normalizr(data))
+    .then(data => {
+      if (!data.books) {
+        return Promise.reject(data.error)
+      }
+      return normalizr(data)
+    })
+    .catch(err => console.debug(err))

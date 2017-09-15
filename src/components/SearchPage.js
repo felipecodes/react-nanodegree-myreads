@@ -6,17 +6,19 @@ function SearchPage(props) {
   const {
     byId,
     allIds,
+    search,
     addTocurrentlyReading,
     addTowantToRead,
     addToRead,
-    searchBooks
+    searchBooks,
+    searchClean
   } = props
 
-  const books = allIds.map(id => byId[id])
+  const books = search ? allIds.map(id => byId[id]) : []
 
   return (
     <div id="search-page">
-      <SearchBar searchBooks={searchBooks} />
+      <SearchBar searchBooks={searchBooks} searchClean={searchClean} />
       <BookList
         books={books}
         addTocurrentlyReading={addTocurrentlyReading}

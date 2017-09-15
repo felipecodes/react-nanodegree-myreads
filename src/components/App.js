@@ -13,7 +13,8 @@ class App extends Component {
       allIds: [],
       currentlyReading: [],
       wantToRead: [],
-      read: []
+      read: [],
+      search: false
     }
   }
 
@@ -76,15 +77,27 @@ class App extends Component {
   }
 
   /**
+   * These is called to indicate that the user stoped searching
+   */
+
+  searchClean = () => this.setState({
+    books: {
+      byId: {},
+      allIds: [],
+      search: false
+    }
+  })
+
+  /**
    * Search books
    * @param {String} query The string typed in the search bar
    */
 
   searchBooks = query => {
-    BooksAPI.search()
+    BooksAPI.search(query, 50)
       .then(books => {
         this.setState({
-          books: Object.assign(this.state.books, books)
+          books: Object.assign(this.state.books, books, { search: true })
         })
       })
   }
@@ -110,7 +123,8 @@ class App extends Component {
       allIds,
       currentlyReading,
       wantToRead,
-      read
+      read,
+      search
     } = this.state.books
 
     const conditionalProps = initialEntries ? {
@@ -136,10 +150,12 @@ class App extends Component {
             <SearchPage
               byId={byId}
               allIds={allIds}
+              search={search}
               addTocurrentlyReading={this.addTocurrentlyReading}
               addTowantToRead={this.addTowantToRead}
               addToRead={this.addToRead}
-              searchBooks={this.searchBooks} />
+              searchBooks={this.searchBooks}
+              searchClean={this.searchClean} />
           )}/>
         </div>
       </Router>

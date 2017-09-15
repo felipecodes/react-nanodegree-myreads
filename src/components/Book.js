@@ -4,7 +4,6 @@ import PropTypes from 'prop-types'
 class Book extends Component {
   handleChange = event => {
     event.preventDefault()
-
     switch (event.target.value) {
       case 'currentlyReading':
         this.props.addTocurrentlyReading(this.props.book)
