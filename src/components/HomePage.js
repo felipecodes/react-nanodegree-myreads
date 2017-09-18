@@ -13,6 +13,7 @@ class HomePage extends Component {
     return (
       <div>
         <BookCase
+          style={{maxWidth: '960px', margin: '0 auto'}}
           byId={this.props.byId}
           currentlyReading={this.props.currentlyReading}
           wantToRead={this.props.wantToRead}

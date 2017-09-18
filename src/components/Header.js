@@ -1,10 +1,11 @@
 import React from 'react'
+import AppBar from 'material-ui/AppBar'
 
 function Header() {
   return (
-    <header className="header">
-      <h1 className="header__title">MyReads</h1>
-    </header>
+    <AppBar
+      title="My Reads"
+      iconClassNameRight="muidocs-icon-navigation-expand-more"/>
   )
 }
 

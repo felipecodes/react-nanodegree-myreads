@@ -14,7 +14,7 @@ function BookCase(props) {
   } = props
 
   return (
-    <div>
+    <div style={props.style}>
       <BookCaseRow
         title="Currently Reading"
         list="currentlyReading"
