@@ -26,20 +26,21 @@ class Book extends Component {
     const { book } = this.props
     return (
       <li className={css.book}>
-        <Paper style={{height: '350px'}}>
-          <header className={css.header}>
-            <h2 className={css.title}>{book.title}</h2>
-            <DropDownMenu
-              className={css.menu}
-              value={this.props.list}
-              onChange={this.handleChange}>
-              <MenuItem value="none" primaryText="None" />
-              <MenuItem value="currentlyReading" primaryText="Currently reading" />
-              <MenuItem value="wantToRead" primaryText="Want to read" />
-              <MenuItem value="read" primaryText="Read" />
-            </DropDownMenu>
-          </header>
+        <Paper style={{width: '128px', margin: '0 auto'}}>
+          <div className={css.thumbnail} style={{backgroundImage: `url(${book.imageLinks.thumbnail})`}} />
         </Paper>
+        <header className={css.header}>
+          <h2 className={css.title}>{book.title}</h2>
+          <DropDownMenu
+            className={css.menu}
+            value={this.props.list}
+            onChange={this.handleChange}>
+            <MenuItem value="none" primaryText="None" />
+            <MenuItem value="currentlyReading" primaryText="Currently reading" />
+            <MenuItem value="wantToRead" primaryText="Want to read" />
+            <MenuItem value="read" primaryText="Read" />
+          </DropDownMenu>
+        </header>
       </li>
     )
   }
