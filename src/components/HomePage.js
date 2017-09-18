@@ -1,38 +1,33 @@
-import React from 'react'
-import { Link } from 'react-router-dom'
+import React, { Component } from 'react'
 import FloatingActionButton from 'material-ui/FloatingActionButton'
 import ContentAdd from 'material-ui/svg-icons/content/add'
 import BookCase from './BookCase'
 
-function HomePage(props) {
-  const {
-    byId,
-    currentlyReading,
-    wantToRead,
-    read,
-    addTocurrentlyReading,
-    addTowantToRead,
-    addToRead,
-  } = props
+class HomePage extends Component {
+  handleClick = event => {
+    event.preventDefault()
+    this.props.history.push('/search')
+  }
 
-  return (
-    <div>
-      <BookCase
-        byId={byId}
-        currentlyReading={currentlyReading}
-        wantToRead={wantToRead}
-        read={read}
-        addTocurrentlyReading={addTocurrentlyReading}
-        addTowantToRead={addTowantToRead}
-        addToRead={addToRead} />
-      <FloatingActionButton
-        iconStyle={{color: '#fff'}}>
-        <Link to="/search" id="search-button">
-          <ContentAdd />
-        </Link>
-      </FloatingActionButton>
-    </div>
-  )
+  render() {
+    return (
+      <div>
+        <BookCase
+          byId={this.props.byId}
+          currentlyReading={this.props.currentlyReading}
+          wantToRead={this.props.wantToRead}
+          read={this.props.read}
+          addTocurrentlyReading={this.props.addTocurrentlyReading}
+          addTowantToRead={this.props.addTowantToRead}
+          addToRead={this.props.addToRead} />
+        <FloatingActionButton
+          iconStyle={{color: '#fff'}}
+          onClick={this.handleClick}>
+            <ContentAdd />
+        </FloatingActionButton>
+      </div>
+    )
+  }
 }
 
 export default HomePage
