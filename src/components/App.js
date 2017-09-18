@@ -135,7 +135,9 @@ class App extends Component {
     return (
       <Router {...conditionalProps} >
         <div>
-          <Header />
+          <MuiThemeProvider>
+            <Header />
+          </MuiThemeProvider>
           <Route exact path='/' render={({ history }) => (
             <MuiThemeProvider>
               <HomePage
