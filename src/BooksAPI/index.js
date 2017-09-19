@@ -38,7 +38,11 @@ export const get = (bookId) =>
 export const getAll = () =>
   fetch(`${api}/books`, { headers })
     .then(res => res.json())
-    .then(data => normalizr(data))
+    .then(data =>{
+      if (!data.error && data.books && data.books.length > 0) {
+        return normalizr(data)
+      }
+    })
 
 export const update = (book, shelf) =>
   fetch(`${api}/books/${book.id}`, {
@@ -62,9 +66,8 @@ export const search = (query, maxResults) =>
   })
     .then(res => res.json())
     .then(data => {
-      if (!data.books) {
-        return Promise.reject(data.error)
+      if (!data.error && data.books && data.books.length > 0) {
+        return normalizr(data)
       }
-      return normalizr(data)
     })
     .catch(err => console.debug(err))

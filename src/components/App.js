@@ -96,10 +96,13 @@ class App extends Component {
   searchBooks = query => {
     BooksAPI.search(query, 50)
       .then(books => {
-        this.setState({
-          books: Object.assign(this.state.books, books, { search: true })
-        })
+        if (books) {
+          this.setState({
+            books: Object.assign(this.state.books, books, { search: true })
+          })
+        }
       })
+      .catch(err => console.error(err))
   }
 
   componentDidMount() {
