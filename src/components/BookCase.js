@@ -1,6 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import BookCaseRow from './BookCaseRow'
+import css from './BookCase.css'
 
 function BookCase(props) {
   const {
@@ -14,7 +15,7 @@ function BookCase(props) {
   } = props
 
   return (
-    <div style={props.style}>
+    <div className={css.bookCase}>
       <BookCaseRow
         title="Currently Reading"
         list="currentlyReading"

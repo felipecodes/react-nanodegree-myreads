@@ -16,20 +16,22 @@ function BookCaseRow(props) {
   } = props
 
   return (
-    <div>
-      <h1>{title}</h1>
+    <div className={css.bookCaseRow}>
       <If test={booksIds && booksIds.length > 0}>
-        <ul className={css.list}>
-          {booksIds.map(id => (
-            <Book
-              key={id}
-              list={list}
-              book={byId[id]}
-              addTocurrentlyReading={addTocurrentlyReading}
-              addTowantToRead={addTowantToRead}
-              addToRead={addToRead} />
-          ))}
-        </ul>
+        <div>
+          <h1>{title}</h1>
+          <ul className={css.list}>
+            {booksIds.map(id => (
+              <Book
+                key={id}
+                list={list}
+                book={byId[id]}
+                addTocurrentlyReading={addTocurrentlyReading}
+                addTowantToRead={addTowantToRead}
+                addToRead={addToRead} />
+            ))}
+          </ul>
+        </div>
       </If>
     </div>
   )

@@ -13,7 +13,6 @@ class HomePage extends Component {
     return (
       <div>
         <BookCase
-          style={{maxWidth: '960px', margin: '0 auto'}}
           byId={this.props.byId}
           currentlyReading={this.props.currentlyReading}
           wantToRead={this.props.wantToRead}
@@ -21,11 +20,14 @@ class HomePage extends Component {
           addTocurrentlyReading={this.props.addTocurrentlyReading}
           addTowantToRead={this.props.addTowantToRead}
           addToRead={this.props.addToRead} />
-        <FloatingActionButton
-          iconStyle={{color: '#fff'}}
-          onClick={this.handleClick}>
-            <ContentAdd />
-        </FloatingActionButton>
+          <div style={{display: 'flex', justifyContent: 'flex-end'}}>
+            <FloatingActionButton
+              style={{marginRight: '1em', marginBottom: '1em'}}
+              iconStyle={{color: '#fff'}}
+              onClick={this.handleClick}>
+                <ContentAdd />
+            </FloatingActionButton>
+          </div>
       </div>
     )
   }

@@ -1,5 +1,10 @@
+.bookCaseRow {
+  margin-top: 3em;
+}
+
 .list {
   display: flex;
+  flex-wrap: wrap;
   justify-content: center;
   list-style: none;
   padding-left: 0;
