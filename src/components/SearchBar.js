@@ -3,7 +3,6 @@ import { Debounce } from 'react-throttle';
 
 class SearchBar extends Component {
   handleChange = event => {
-    event.preventDefault()
     if (event.target.value === '') {
       this.props.searchClean()
     } else {
@@ -13,15 +12,14 @@ class SearchBar extends Component {
 
   render() {
     return (
-      <form>
-        <Debounce time="400" handler="onChange">
-          <input
-            id="search-input"
-            type="search"
-            name="search"
-            onChange={this.handleChange} />
-        </Debounce>
-      </form>
+      <Debounce time="100" handler="onChange">
+        <input
+          id="search-input"
+          type="search"
+          name="search"
+          placeholder="Search a book..."
+          onChange={this.handleChange} />
+      </Debounce>
     )
   }
 }
