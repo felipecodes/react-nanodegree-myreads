@@ -24,10 +24,14 @@ class Book extends Component {
 
   render() {
     const { book } = this.props
+    const backgroundURL = book.imageLinks ?
+      (book.imageLinks.thumbnail || null) : null
+    const style = backgroundURL ? { backgroundImage: `url(${backgroundURL})` } : null
+
     return (
       <li className={css.book}>
         <Paper style={{width: '128px', margin: '0 auto'}}>
-          <div className={css.thumbnail} style={{backgroundImage: `url(${book.imageLinks.thumbnail})`}} />
+          <div className={css.thumbnail} style={style} />
         </Paper>
         <header className={css.header}>
           <h2 className={css.title}>{book.title}</h2>
