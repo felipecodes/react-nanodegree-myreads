@@ -30,7 +30,7 @@ class Book extends Component {
 
     return (
       <li className={css.book}>
-        <Paper style={{width: '128px', margin: '0 auto'}}>
+        <Paper style={{width: '128px', margin: '0 auto'}} zDepth={1}>
           <div className={css.thumbnail} style={style} />
         </Paper>
         <header className={css.header}>

@@ -22,7 +22,7 @@ class HomePage extends Component {
           addToRead={this.props.addToRead} />
           <div style={{display: 'flex', justifyContent: 'flex-end'}}>
             <FloatingActionButton
-              style={{marginRight: '1em', marginBottom: '1em'}}
+              style={{marginRight: '2em', marginBottom: '2em'}}
               iconStyle={{color: '#fff'}}
               onClick={this.handleClick}>
                 <ContentAdd />

@@ -1,6 +1,7 @@
 import React from 'react'
 import SearchBar from './SearchBar'
 import BookList from './BookList'
+import css from './SearchPage.css'
 
 function SearchPage(props) {
   const {
@@ -17,7 +18,7 @@ function SearchPage(props) {
   const books = search ? allIds.map(id => byId[id]) : []
 
   return (
-    <div id="search-page">
+    <div id="search-page" className={css.searchPage}>
       <SearchBar searchBooks={searchBooks} searchClean={searchClean} />
       <BookList
         books={books}
