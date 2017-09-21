@@ -2,11 +2,17 @@ import React, { Component } from 'react'
 import FloatingActionButton from 'material-ui/FloatingActionButton'
 import ContentAdd from 'material-ui/svg-icons/content/add'
 import BookCase from './BookCase'
+import * as BooksAPI from '../BooksAPI'
 
 class HomePage extends Component {
   handleClick = event => {
     event.preventDefault()
     this.props.history.push('/search')
+  }
+
+  componentDidMount() {
+    BooksAPI.getAll()
+      .then(books => this.props.receiverBooks(books))
   }
 
   render() {

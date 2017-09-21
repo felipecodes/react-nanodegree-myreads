@@ -11,11 +11,24 @@ class App extends Component {
     books: {
       byId: {},
       allIds: [],
+      searchedById: {},
+      searchedAllIds: [],
       currentlyReading: [],
       wantToRead: [],
-      read: [],
-      search: false
+      read: []
     }
+  }
+
+  bookInShelf = (id, shelf) => {
+    const { byId, searchedById } = this.state.books
+    return (byId[id] && byId[id].shelf === shelf) ||
+           (searchedById[id] && searchedById[id].shelf === shelf)
+  }
+
+  receiverBooks = books => {
+    this.setState({
+      books: Object.assign(this.state.books, books)
+    })
   }
 
   /**
@@ -26,7 +39,7 @@ class App extends Component {
   addTocurrentlyReading = ({ id }) => {
     const SHELF = 'currentlyReading'
     // Does not change if already exists
-    if (this.state.books.byId[id].shelf === SHELF) {
+    if (this.bookInShelf(id, SHELF)) {
       return
     }
 
@@ -45,7 +58,7 @@ class App extends Component {
   addTowantToRead = ({ id }) => {
     const SHELF = 'wantToRead'
     // Does not change if already exists
-    if (this.state.books.byId[id].shelf === SHELF) {
+    if (this.bookInShelf(id, SHELF)) {
       return
     }
 
@@ -64,7 +77,7 @@ class App extends Component {
   addToRead = ({ id }) => {
     const SHELF = 'read'
     // Does not change if already exists
-    if (this.state.books.byId[id].shelf === SHELF) {
+    if (this.bookInShelf(id, SHELF)) {
       return
     }
 
@@ -82,9 +95,8 @@ class App extends Component {
 
   searchClean = () => this.setState({
     books: {
-      byId: {},
-      allIds: [],
-      search: false
+      searchedById: {},
+      searchedAllIds: []
     }
   })
 
@@ -97,9 +109,8 @@ class App extends Component {
     BooksAPI.search(query, 50)
       .then(books => {
         if (books) {
-          debugger
           this.setState({
-            books: Object.assign(this.state.books, books, { search: true })
+            books: Object.assign(this.state.books, books)
           })
         }
       })
@@ -128,15 +139,6 @@ class App extends Component {
     return 'none'
   }
 
-  componentDidMount() {
-    BooksAPI.getAll()
-      .then(books => {
-        this.setState({
-          books: Object.assign(this.state.books,  books)
-        })
-      })
-  }
-
   render() {
     const {
       router: Router,
@@ -146,11 +148,11 @@ class App extends Component {
 
     const {
       byId,
-      allIds,
+      searchedById,
+      searchedAllIds,
       currentlyReading,
       wantToRead,
-      read,
-      search
+      read
     } = this.state.books
 
     const conditionalProps = initialEntries ? {
@@ -172,6 +174,7 @@ class App extends Component {
                 currentlyReading={currentlyReading}
                 wantToRead={wantToRead}
                 read={read}
+                receiverBooks={this.receiverBooks}
                 addTocurrentlyReading={this.addTocurrentlyReading}
                 addTowantToRead={this.addTowantToRead}
                 addToRead={this.addToRead} />
@@ -180,9 +183,8 @@ class App extends Component {
           <Route exact path="/search" render={() => (
             <MuiThemeProvider>
               <SearchPage
-                byId={byId}
-                allIds={allIds}
-                search={search}
+                byId={searchedById}
+                allIds={searchedAllIds}
                 addTocurrentlyReading={this.addTocurrentlyReading}
                 addTowantToRead={this.addTowantToRead}
                 addToRead={this.addToRead}

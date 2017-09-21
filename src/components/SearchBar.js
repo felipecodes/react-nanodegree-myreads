@@ -4,11 +4,14 @@ import { Debounce } from 'react-throttle'
 import css from './SearchBar.css'
 
 class SearchBar extends Component {
+  state = { value: '' }
   handleChange = event => {
-    if (event.target.value === '') {
+    const { value } = event.target
+    this.setState({ value })
+    if (value === '') {
       this.props.searchClean()
     } else {
-      this.props.searchBooks(event.target.value)
+      this.props.searchBooks(value)
     }
   }
 

@@ -22,19 +22,20 @@ class Book extends Component {
     }
   }
 
-  render() {
-    const { book } = this.props
-    const backgroundURL = book.imageLinks ?
-      (book.imageLinks.thumbnail || null) : null
-    const style = backgroundURL ? { backgroundImage: `url(${backgroundURL})` } : null
+  getStyles = () => {
+    const backgroundURL = this.props.book.imageLinks ?
+    (this.props.book.imageLinks.thumbnail || null) : null
+    return backgroundURL ? { backgroundImage: `url(${backgroundURL})` } : null
+  }
 
+  render() {
     return (
       <li className={css.book}>
         <Paper style={{width: '128px', margin: '0 auto'}} zDepth={1}>
-          <div className={css.thumbnail} style={style} />
+          <div className={css.thumbnail} style={this.getStyles()} />
         </Paper>
         <header className={css.header}>
-          <h2 className={css.title}>{book.title}</h2>
+          <h2 className={css.title}>{this.props.book.title}</h2>
           <DropDownMenu
             className={css.menu}
             value={this.props.list}
