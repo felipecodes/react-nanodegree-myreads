@@ -97,12 +97,35 @@ class App extends Component {
     BooksAPI.search(query, 50)
       .then(books => {
         if (books) {
+          debugger
           this.setState({
             books: Object.assign(this.state.books, books, { search: true })
           })
         }
       })
       .catch(err => console.error(err))
+  }
+
+  getList = ({ id }) => {
+    const {
+      currentlyReading,
+      wantToRead,
+      read
+    } = this.state.books
+
+    if (currentlyReading.indexOf(id) > -1) {
+      return 'currentlyReading'
+    }
+
+    if (wantToRead.indexOf(id) > -1) {
+      return 'wantToRead'
+    }
+
+    if (read.indexOf(id) > -1) {
+      return 'read'
+    }
+
+    return 'none'
   }
 
   componentDidMount() {
@@ -164,7 +187,8 @@ class App extends Component {
                 addTowantToRead={this.addTowantToRead}
                 addToRead={this.addToRead}
                 searchBooks={this.searchBooks}
-                searchClean={this.searchClean} />
+                searchClean={this.searchClean}
+                getList={this.getList} />
             </MuiThemeProvider>
           )}/>
         </div>

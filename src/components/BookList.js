@@ -9,6 +9,7 @@ function BookList(props) {
     addTocurrentlyReading,
     addTowantToRead,
     addToRead,
+    getList,
     books
   } = props
 
@@ -18,6 +19,7 @@ function BookList(props) {
         {books.map(book => (
           <Book
             key={book.id}
+            list={getList(book)}
             book={book}
             addTocurrentlyReading={addTocurrentlyReading}
             addTowantToRead={addTowantToRead}

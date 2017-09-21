@@ -30,6 +30,20 @@ function normalizr({ books }) {
   return state
 }
 
+function _normalizr({ books }) {
+  const state = {
+    byId: {},
+    allIds: []
+  }
+
+  for (const book of books) {
+    state.byId[book.id] = book
+    state.allIds.push(book.id)
+  }
+
+  return state
+}
+
 export const get = (bookId) =>
   fetch(`${api}/books/${bookId}`, { headers })
     .then(res => res.json())
@@ -67,7 +81,7 @@ export const search = (query, maxResults) =>
     .then(res => res.json())
     .then(data => {
       if (!data.error && data.books && data.books.length > 0) {
-        return normalizr(data)
+        return _normalizr(data)
       }
     })
     .catch(err => console.debug(err))
