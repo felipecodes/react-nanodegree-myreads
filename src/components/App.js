@@ -10,7 +10,6 @@ class App extends Component {
   state = {
     books: {
       byId: {},
-      allIds: [],
       searchedById: {},
       searchedAllIds: [],
       currentlyReading: [],
@@ -106,53 +105,37 @@ class App extends Component {
   } 
 
   /**
-   * These is called to indicate that the user stoped searching
-   */
-
-  searchClean = () => this.setState({
-    books: {
-      searchedById: {},
-      searchedAllIds: []
-    }
-  })
-
-  /**
    * Search books
    * @param {String} query The string typed in the search bar
    */
 
   searchBooks = query => {
     BooksAPI.search(query, 50)
-      .then(books => {
-        if (books) {
-          this.setState({
-            books: Object.assign(this.state.books, books)
+      .then(({ error, books }) => {
+        if (error || books.error) {
+          return this.setState({
+            books: Object.assign(this.state.books, {
+              searchedById: {},
+              searchedAllIds: []
+            })
           })
         }
+
+        const searchedById = {}
+        const searchedAllIds = []
+
+        for (const book of books) {
+          searchedById[book.id] = book
+          searchedAllIds.push(book.id)
+        }
+
+        this.setState({
+          books: Object.assign(this.state.books, { 
+            searchedById,
+            searchedAllIds
+          })
+        })
       })
-      .catch(err => console.error(err))
-  }
-
-  getList = ({ id }) => {
-    const {
-      currentlyReading,
-      wantToRead,
-      read
-    } = this.state.books
-
-    if (currentlyReading.indexOf(id) > -1) {
-      return 'currentlyReading'
-    }
-
-    if (wantToRead.indexOf(id) > -1) {
-      return 'wantToRead'
-    }
-
-    if (read.indexOf(id) > -1) {
-      return 'read'
-    }
-
-    return 'none'
   }
 
   render() {
@@ -206,9 +189,7 @@ class App extends Component {
                 addTowantToRead={this.addTowantToRead}
                 addToRead={this.addToRead}
                 removeShelf={this.removeShelf}
-                searchBooks={this.searchBooks}
-                searchClean={this.searchClean}
-                getList={this.getList} />
+                searchBooks={this.searchBooks} />
             </MuiThemeProvider>
           )}/>
         </div>

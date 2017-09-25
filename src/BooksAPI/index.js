@@ -65,21 +65,4 @@ export const search = (query, maxResults) =>
     body: JSON.stringify({ query, maxResults })
   })
     .then(res => res.json())
-    .then(data => {
-      if (!data.error && data.books && data.books.length > 0) {
-        const { books } = data
-        const searchedById = {}
-        const searchedAllIds = []
-
-        for (const book of books) {
-          searchedById[book.id] = book
-          searchedAllIds.push(book.id)
-        }
-
-        return {
-          searchedById,
-          searchedAllIds
-        }
-      }
-    })
     .catch(err => console.debug(err))

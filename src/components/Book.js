@@ -6,7 +6,11 @@ import MenuItem from 'material-ui/MenuItem'
 import css from './Book.css'
 
 class Book extends Component {
+  state = { list: null }
+
   handleChange = (event, index, value) => {
+    this.setState({ list: value })
+
     switch (value) {
       case 'currentlyReading':
         this.props.addTocurrentlyReading(this.props.book)
@@ -40,7 +44,7 @@ class Book extends Component {
           <h2 className={css.title}>{this.props.book.title}</h2>
           <DropDownMenu
             className={css.menu}
-            value={this.props.list}
+            value={this.state.list || this.props.list}
             onChange={this.handleChange}>
             <MenuItem value="none" primaryText="None" />
             <MenuItem value="currentlyReading" primaryText="Currently reading" />
