@@ -10,7 +10,8 @@ function BookList(props) {
     addTowantToRead,
     addToRead,
     getList,
-    books
+    books,
+    removeShelf
   } = props
 
   return (
@@ -23,7 +24,8 @@ function BookList(props) {
             book={book}
             addTocurrentlyReading={addTocurrentlyReading}
             addTowantToRead={addTowantToRead}
-            addToRead={addToRead} />
+            addToRead={addToRead}
+            removeShelf={removeShelf} />
         ))}
       </ul>
     </If>

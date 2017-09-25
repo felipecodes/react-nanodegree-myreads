@@ -90,6 +90,22 @@ class App extends Component {
   }
 
   /**
+   * Remove the book from shelf
+   * @param {object} book the book object 
+   */
+
+  removeShelf = book => {
+    if (book.shelf !== 'none') {
+      BooksAPI.update({ id: book.id }, 'none')
+        .then(books => {
+          this.setState({
+            books: Object.assign(this.state.books, books)
+          })
+        })
+    }
+  } 
+
+  /**
    * These is called to indicate that the user stoped searching
    */
 
@@ -177,7 +193,8 @@ class App extends Component {
                 receiverBooks={this.receiverBooks}
                 addTocurrentlyReading={this.addTocurrentlyReading}
                 addTowantToRead={this.addTowantToRead}
-                addToRead={this.addToRead} />
+                addToRead={this.addToRead}
+                removeShelf={this.removeShelf} />
             </MuiThemeProvider>
           )}/>
           <Route exact path="/search" render={() => (
@@ -188,6 +205,7 @@ class App extends Component {
                 addTocurrentlyReading={this.addTocurrentlyReading}
                 addTowantToRead={this.addTowantToRead}
                 addToRead={this.addToRead}
+                removeShelf={this.removeShelf}
                 searchBooks={this.searchBooks}
                 searchClean={this.searchClean}
                 getList={this.getList} />

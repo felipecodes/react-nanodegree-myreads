@@ -13,7 +13,8 @@ class SearchPage extends Component {
       addToRead,
       searchBooks,
       searchClean,
-      getList
+      getList,
+      removeShelf
     } = this.props
 
     const books = allIds.map(id => byId[id])
@@ -26,6 +27,7 @@ class SearchPage extends Component {
           addTocurrentlyReading={addTocurrentlyReading}
           addTowantToRead={addTowantToRead}
           addToRead={addToRead}
+          removeShelf={removeShelf}
           getList={getList} />
       </div>
     )

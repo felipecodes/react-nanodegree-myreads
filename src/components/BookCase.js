@@ -11,7 +11,8 @@ function BookCase(props) {
     read,
     addTocurrentlyReading,
     addTowantToRead,
-    addToRead
+    addToRead,
+    removeShelf
   } = props
 
   return (
@@ -23,7 +24,8 @@ function BookCase(props) {
         booksIds={currentlyReading}
         addTocurrentlyReading={addTocurrentlyReading}
         addTowantToRead={addTowantToRead}
-        addToRead={addToRead} />
+        addToRead={addToRead}
+        removeShelf={removeShelf} />
       <BookCaseRow
         title="Want to Read"
         list="wantToRead"
@@ -31,7 +33,8 @@ function BookCase(props) {
         booksIds={wantToRead}
         addTocurrentlyReading={addTocurrentlyReading}
         addTowantToRead={addTowantToRead}
-        addToRead={addToRead} />
+        addToRead={addToRead}
+        removeShelf={removeShelf} />
       <BookCaseRow
         title="Read"
         list="read"
@@ -39,7 +42,8 @@ function BookCase(props) {
         booksIds={read}
         addTocurrentlyReading={addTocurrentlyReading}
         addTowantToRead={addTowantToRead}
-        addToRead={addToRead} />
+        addToRead={addToRead}
+        removeShelf={removeShelf} />
     </div>
   )
 }

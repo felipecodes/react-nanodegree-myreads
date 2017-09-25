@@ -25,7 +25,8 @@ class HomePage extends Component {
           read={this.props.read}
           addTocurrentlyReading={this.props.addTocurrentlyReading}
           addTowantToRead={this.props.addTowantToRead}
-          addToRead={this.props.addToRead} />
+          addToRead={this.props.addToRead}
+          removeShelf={this.props.removeShelf} />
           <div style={{display: 'flex', justifyContent: 'flex-end'}}>
             <FloatingActionButton
               style={{marginRight: '2em', marginBottom: '2em'}}

@@ -7,7 +7,6 @@ import css from './Book.css'
 
 class Book extends Component {
   handleChange = (event, index, value) => {
-    event.preventDefault()
     switch (value) {
       case 'currentlyReading':
         this.props.addTocurrentlyReading(this.props.book)
@@ -17,6 +16,9 @@ class Book extends Component {
         break
       case 'read':
         this.props.addToRead(this.props.book)
+        break
+      case 'none':
+        this.props.removeShelf(this.props.book)
         break
       default:
     }

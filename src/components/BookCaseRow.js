@@ -12,7 +12,8 @@ function BookCaseRow(props) {
     booksIds,
     addTocurrentlyReading,
     addTowantToRead,
-    addToRead
+    addToRead,
+    removeShelf
   } = props
 
   return (
@@ -28,7 +29,8 @@ function BookCaseRow(props) {
                 book={byId[id]}
                 addTocurrentlyReading={addTocurrentlyReading}
                 addTowantToRead={addTowantToRead}
-                addToRead={addToRead} /> : null
+                addToRead={addToRead}
+                removeShelf={removeShelf} /> : null
             ))}
           </ul>
         </div>
