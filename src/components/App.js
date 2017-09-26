@@ -102,7 +102,7 @@ class App extends Component {
           })
         })
     }
-  } 
+  }
 
   /**
    * Search books
@@ -136,6 +136,11 @@ class App extends Component {
           })
         })
       })
+  }
+
+  getShelf = ({ id }) => {
+    const { byId } = this.state.books
+    return byId[id] ? byId[id].shelf : 'none'
   }
 
   render() {
@@ -188,8 +193,10 @@ class App extends Component {
                 addTocurrentlyReading={this.addTocurrentlyReading}
                 addTowantToRead={this.addTowantToRead}
                 addToRead={this.addToRead}
+                receiverBooks={this.receiverBooks}
                 removeShelf={this.removeShelf}
-                searchBooks={this.searchBooks} />
+                searchBooks={this.searchBooks}
+                getShelf={this.getShelf} />
             </MuiThemeProvider>
           )}/>
         </div>

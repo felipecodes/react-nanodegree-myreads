@@ -5,26 +5,18 @@ import If from './If'
 import css from './BookList.css'
 
 function BookList(props) {
-  const {
-    addTocurrentlyReading,
-    addTowantToRead,
-    addToRead,
-    books,
-    removeShelf
-  } = props
-
   return (
-    <If test={books.length > 0}>
+    <If test={props.books.length > 0}>
       <ul className={css.list}>
-        {books.map(book => (
+        {props.books.map(book => (
           <Book
             key={book.id}
-            list={'none'}
+            list={props.getShelf(book)}
             book={book}
-            addTocurrentlyReading={addTocurrentlyReading}
-            addTowantToRead={addTowantToRead}
-            addToRead={addToRead}
-            removeShelf={removeShelf} />
+            addTocurrentlyReading={props.addTocurrentlyReading}
+            addTowantToRead={props.addTowantToRead}
+            addToRead={props.addToRead}
+            removeShelf={props.removeShelf} />
         ))}
       </ul>
     </If>
