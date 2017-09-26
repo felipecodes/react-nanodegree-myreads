@@ -18,11 +18,9 @@ class SearchPage extends Component {
         <SearchBar searchBooks={this.props.searchBooks} />
         <BookList
           books={books}
-          addTocurrentlyReading={this.props.addTocurrentlyReading}
-          addTowantToRead={this.props.addTowantToRead}
-          addToRead={this.props.addToRead}
           removeShelf={this.props.removeShelf}
-          getShelf={this.props.getShelf} />
+          getShelf={this.props.getShelf}
+          setShelf={this.props.setShelf} />
       </div>
     )  
   }

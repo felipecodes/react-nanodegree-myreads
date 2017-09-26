@@ -7,22 +7,26 @@ import SearchPage from './SearchPage'
 import * as BooksAPI from '../BooksAPI/'
 
 class App extends Component {
-  state = {
-    books: {
-      byId: {},
-      searchedById: {},
-      searchedAllIds: [],
-      currentlyReading: [],
-      wantToRead: [],
-      read: []
-    }
+  constructor(props) {
+    super(props)
+
+    this.state = {
+      books: {
+        byId: {},
+        searchedById: {},
+        searchedAllIds: [],
+        currentlyReading: [],
+        wantToRead: [],
+        read: []
+      }
+    }  
   }
 
-  bookInShelf = (id, shelf) => {
-    const { byId, searchedById } = this.state.books
-    return (byId[id] && byId[id].shelf === shelf) ||
-           (searchedById[id] && searchedById[id].shelf === shelf)
-  }
+  /**
+   * Used on the child components to set parent state
+   * with books from the API
+   * @param {Object} books The state object normalized
+   */
 
   receiverBooks = books => {
     this.setState({
@@ -31,71 +35,44 @@ class App extends Component {
   }
 
   /**
-   * Set the component state adding the book as currently reading
+   * Used on the book component to change the shelf of the book
    * @param {Object} book The book object
+   * @param {String} shelf The shelf name
    */
 
-  addTocurrentlyReading = ({ id }) => {
-    const SHELF = 'currentlyReading'
-    // Does not change if already exists
-    if (this.bookInShelf(id, SHELF)) {
-      return
-    }
-
-    BooksAPI.update({ id }, SHELF)
-      .then(books => {
-        this.setState({
-          books: Object.assign(this.state.books, books)
+  setShelf = (book, shelf) => {
+    if (book.shelf !== shelf) {
+      BooksAPI.update(book, shelf)
+        .then(books => {
+          const { byId, searchedById } = this.state.books
+          const _book = byId[book.id] || searchedById[book.id]
+          _book.shelf = shelf
+          this.setState({
+            books: Object.assign(this.state.books, books)
+          })
         })
-      })
+    }
   }
 
   /**
+   * Used to gets the shelf of the book
    * @param {Object} book The book object
+   * @return {String} The book shelf
    */
-
-  addTowantToRead = ({ id }) => {
-    const SHELF = 'wantToRead'
-    // Does not change if already exists
-    if (this.bookInShelf(id, SHELF)) {
-      return
-    }
-
-    BooksAPI.update({ id }, SHELF)
-      .then(books => {
-        this.setState({
-          books: Object.assign(this.state.books, books)
-        })
-      })
+  
+  getShelf = ({ id }) => {
+    const { byId } = this.state.books
+    return byId[id] ? byId[id].shelf : 'none'
   }
 
   /**
-   * @param {Object} book The book object
-   */
-
-  addToRead = ({ id }) => {
-    const SHELF = 'read'
-    // Does not change if already exists
-    if (this.bookInShelf(id, SHELF)) {
-      return
-    }
-
-    BooksAPI.update({ id }, SHELF)
-      .then(books => {
-        this.setState({
-          books: Object.assign(this.state.books, books)
-        })
-      })
-  }
-
-  /**
-   * Remove the book from shelf
+   * Used to remove the book from the shelf
    * @param {object} book the book object 
    */
 
   removeShelf = book => {
     if (book.shelf !== 'none') {
-      BooksAPI.update({ id: book.id }, 'none')
+      BooksAPI.update(book, 'none')
         .then(books => {
           this.setState({
             books: Object.assign(this.state.books, books)
@@ -105,7 +82,7 @@ class App extends Component {
   }
 
   /**
-   * Search books
+   * Used to search books
    * @param {String} query The string typed in the search bar
    */
 
@@ -138,17 +115,8 @@ class App extends Component {
       })
   }
 
-  getShelf = ({ id }) => {
-    const { byId } = this.state.books
-    return byId[id] ? byId[id].shelf : 'none'
-  }
-
   render() {
-    const {
-      router: Router,
-      initialEntries,
-      initialIndex
-    } = this.props
+    const { router: Router } = this.props
 
     const {
       byId,
@@ -159,13 +127,8 @@ class App extends Component {
       read
     } = this.state.books
 
-    const conditionalProps = initialEntries ? {
-      initialEntries,
-      initialIndex
-    } : {}
-
     return (
-      <Router {...conditionalProps} >
+      <Router>
         <div>
           <MuiThemeProvider>
             <Header />
@@ -179,10 +142,8 @@ class App extends Component {
                 wantToRead={wantToRead}
                 read={read}
                 receiverBooks={this.receiverBooks}
-                addTocurrentlyReading={this.addTocurrentlyReading}
-                addTowantToRead={this.addTowantToRead}
-                addToRead={this.addToRead}
-                removeShelf={this.removeShelf} />
+                removeShelf={this.removeShelf}
+                setShelf={this.setShelf} />
             </MuiThemeProvider>
           )}/>
           <Route exact path="/search" render={() => (
@@ -190,10 +151,8 @@ class App extends Component {
               <SearchPage
                 byId={searchedById}
                 allIds={searchedAllIds}
-                addTocurrentlyReading={this.addTocurrentlyReading}
-                addTowantToRead={this.addTowantToRead}
-                addToRead={this.addToRead}
                 receiverBooks={this.receiverBooks}
+                setShelf={this.setShelf}
                 removeShelf={this.removeShelf}
                 searchBooks={this.searchBooks}
                 getShelf={this.getShelf} />

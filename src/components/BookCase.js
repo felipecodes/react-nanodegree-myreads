@@ -4,46 +4,29 @@ import BookCaseRow from './BookCaseRow'
 import css from './BookCase.css'
 
 function BookCase(props) {
-  const {
-    byId,
-    currentlyReading,
-    wantToRead,
-    read,
-    addTocurrentlyReading,
-    addTowantToRead,
-    addToRead,
-    removeShelf
-  } = props
-
   return (
     <div className={css.bookCase}>
       <BookCaseRow
         title="Currently Reading"
-        list="currentlyReading"
-        byId={byId}
-        booksIds={currentlyReading}
-        addTocurrentlyReading={addTocurrentlyReading}
-        addTowantToRead={addTowantToRead}
-        addToRead={addToRead}
-        removeShelf={removeShelf} />
+        shelf="currentlyReading"
+        byId={props.byId}
+        booksIds={props.currentlyReading}
+        removeShelf={props.removeShelf}
+        setShelf={props.setShelf} />
       <BookCaseRow
         title="Want to Read"
-        list="wantToRead"
-        byId={byId}
-        booksIds={wantToRead}
-        addTocurrentlyReading={addTocurrentlyReading}
-        addTowantToRead={addTowantToRead}
-        addToRead={addToRead}
-        removeShelf={removeShelf} />
+        shelf="wantToRead"
+        byId={props.byId}
+        booksIds={props.wantToRead}
+        removeShelf={props.removeShelf}
+        setShelf={props.setShelf} />
       <BookCaseRow
         title="Read"
-        list="read"
-        byId={byId}
-        booksIds={read}
-        addTocurrentlyReading={addTocurrentlyReading}
-        addTowantToRead={addTowantToRead}
-        addToRead={addToRead}
-        removeShelf={removeShelf} />
+        shelf="read"
+        byId={props.byId}
+        booksIds={props.read}
+        removeShelf={props.removeShelf}
+        setShelf={props.setShelf} />
     </div>
   )
 }
@@ -53,9 +36,8 @@ BookCase.propTypes = {
   currentlyReading: PropTypes.array.isRequired,
   wantToRead: PropTypes.array.isRequired,
   read: PropTypes.array.isRequired,
-  addTocurrentlyReading: PropTypes.func.isRequired,
-  addTowantToRead: PropTypes.func.isRequired,
-  addToRead: PropTypes.func.isRequired
+  removeShelf: PropTypes.func.isRequired,
+  setShelf: PropTypes.func.isRequired
 }
 
 export default BookCase

@@ -11,11 +11,9 @@ function BookList(props) {
         {props.books.map(book => (
           <Book
             key={book.id}
-            list={props.getShelf(book)}
+            shelf={props.getShelf(book)}
             book={book}
-            addTocurrentlyReading={props.addTocurrentlyReading}
-            addTowantToRead={props.addTowantToRead}
-            addToRead={props.addToRead}
+            setShelf={props.setShelf}
             removeShelf={props.removeShelf} />
         ))}
       </ul>
@@ -25,9 +23,9 @@ function BookList(props) {
 
 BookList.propTypes = {
   books: PropTypes.array.isRequired,
-  addTocurrentlyReading: PropTypes.func.isRequired,
-  addTowantToRead: PropTypes.func.isRequired,
-  addToRead: PropTypes.func.isRequired
+  setShelf: PropTypes.func.isRequired,
+  getShelf: PropTypes.func.isRequired,
+  removeShelf: PropTypes.func.isRequired
 }
 
 export default BookList

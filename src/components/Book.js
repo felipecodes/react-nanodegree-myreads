@@ -8,27 +8,12 @@ import css from './Book.css'
 class Book extends Component {
   constructor(props) {
     super(props)
-    this.state = { list: null }    
+    this.state = { shelf: null }
   }
 
   handleChange = (event, index, value) => {
-    this.setState({ list: value })
-
-    switch (value) {
-      case 'currentlyReading':
-        this.props.addTocurrentlyReading(this.props.book)
-        break
-      case 'wantToRead':
-        this.props.addTowantToRead(this.props.book)
-        break
-      case 'read':
-        this.props.addToRead(this.props.book)
-        break
-      case 'none':
-        this.props.removeShelf(this.props.book)
-        break
-      default:
-    }
+    this.setState({ shelf: value })
+    this.props.setShelf(this.props.book, value)
   }
 
   getStyles = () => {
@@ -47,7 +32,7 @@ class Book extends Component {
           <h2 className={css.title}>{this.props.book.title}</h2>
           <DropDownMenu
             className={css.menu}
-            value={this.state.list || this.props.list}
+            value={this.state.shelf || this.props.shelf}
             onChange={this.handleChange}>
             <MenuItem value="none" primaryText="None" />
             <MenuItem value="currentlyReading" primaryText="Currently reading" />
@@ -62,9 +47,7 @@ class Book extends Component {
 
 Book.propTypes = {
   book: PropTypes.object.isRequired,
-  addTocurrentlyReading: PropTypes.func.isRequired,
-  addTowantToRead: PropTypes.func.isRequired,
-  addToRead: PropTypes.func.isRequired
+  shelf: PropTypes.string.isRequired
 }
 
 export default Book

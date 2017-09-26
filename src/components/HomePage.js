@@ -22,10 +22,8 @@ class HomePage extends Component {
           currentlyReading={this.props.currentlyReading}
           wantToRead={this.props.wantToRead}
           read={this.props.read}
-          addTocurrentlyReading={this.props.addTocurrentlyReading}
-          addTowantToRead={this.props.addTowantToRead}
-          addToRead={this.props.addToRead}
-          removeShelf={this.props.removeShelf} />
+          removeShelf={this.props.removeShelf}
+          setShelf={this.props.setShelf} />
         <SearchButtom onClick={this.handleClick} />
       </div>
     )
