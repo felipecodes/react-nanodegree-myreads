@@ -6,7 +6,10 @@ import MenuItem from 'material-ui/MenuItem'
 import css from './Book.css'
 
 class Book extends Component {
-  state = { list: null }
+  constructor(props) {
+    super(props)
+    this.state = { list: null }    
+  }
 
   handleChange = (event, index, value) => {
     this.setState({ list: value })
