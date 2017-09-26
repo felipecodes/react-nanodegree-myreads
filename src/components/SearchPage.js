@@ -5,7 +5,7 @@ import css from './SearchPage.css'
 import * as BooksAPI from '../BooksAPI/'
 
 class SearchPage extends Component {
-  componentWillMount() {
+  componentDidMount() {
     BooksAPI.getAll()
       .then(books => this.props.receiverBooks(books))
   }
