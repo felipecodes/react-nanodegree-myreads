@@ -1,9 +1,9 @@
 .container {
-    display: flex;
-    justify-content: flex-end;
+  display: flex;
+  justify-content: flex-end;
 }
 
 .buttom {
-    margin-right: 2em;
-    margin-bottom: 2em;
+  margin-right: 2em;
+  margin-bottom: 2em;
 }
