@@ -1,7 +1,6 @@
 import React, { Component } from 'react'
-import FloatingActionButton from 'material-ui/FloatingActionButton'
-import ContentAdd from 'material-ui/svg-icons/content/add'
 import BookCase from './BookCase'
+import SearchButtom from './SearchButtom'
 import * as BooksAPI from '../BooksAPI'
 
 class HomePage extends Component {
@@ -27,14 +26,7 @@ class HomePage extends Component {
           addTowantToRead={this.props.addTowantToRead}
           addToRead={this.props.addToRead}
           removeShelf={this.props.removeShelf} />
-          <div style={{display: 'flex', justifyContent: 'flex-end'}}>
-            <FloatingActionButton
-              style={{marginRight: '2em', marginBottom: '2em'}}
-              iconStyle={{color: '#fff'}}
-              onClick={this.handleClick}>
-                <ContentAdd />
-            </FloatingActionButton>
-          </div>
+        <SearchButtom onClick={this.handleClick} />
       </div>
     )
   }
